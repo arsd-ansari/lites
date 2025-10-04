@@ -3,7 +3,10 @@ import 'package:lites/screens/caseDecidedOnFirstHearing.dart';
 import 'package:lites/screens/caseManagementScreen.dart';
 import 'package:lites/screens/caseWithoutCaseNo.dart';
 import 'package:lites/screens/common/dashboardScreen.dart';
+import 'package:lites/screens/eCNRSearch.dart';
+import 'package:lites/screens/eCaseStatus.dart';
 import 'package:lites/screens/forms/case_registration_form.dart';
+import 'package:lites/screens/hCNRSearch.dart';
 import 'package:lites/screens/reports/aagPerformanceReport.dart';
 import 'package:lites/screens/reports/actionPendingReport.dart';
 import 'package:lites/screens/reports/advocatePerformanceReport.dart';
@@ -21,6 +24,7 @@ import '../screens/citizenHomeScreen.dart';
 import '../screens/common/loginPageScreen.dart';
 import '../screens/common/splashPage.dart';
 import '../screens/common/updateProfileScreen.dart';
+import '../screens/hCaseStatus.dart';
 import '../screens/reports/dashboardPendencyReport.dart';
 import '../screens/reports/deficiencyReport.dart';
 import '../screens/reports/entryStatusReport.dart';
@@ -63,10 +67,10 @@ class Routes {
   String replyNotFiledReport = ReplyNotFiledReport().routeName;
 
   //new development
-  String hCnrSearch = DashboardScreen().routeName;
-  String hCaseStatus = ActionPendingReport().routeName;
-  String eCnrSearch = CourtWiseReport().routeName;
-  String eCaseStatus = PriorityWiseReport().routeName;
+  String hCnrSearch = HighCourtCNRSearch().routeName;
+  String hCaseStatus = HighCourtCaseStatus().routeName;
+  String eCnrSearch = ECourtCNRSearch().routeName;
+  String eCaseStatus = ECaseStatus().routeName;
   String causeList = OicPerformanceReport().routeName;
   String advanceSearch = AdvocatePerformanceReport().routeName;
 

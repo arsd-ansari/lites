@@ -14,7 +14,7 @@ class _AuthClient implements AuthClient {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://103.203.138.228/AuthService/api/';
+    baseUrl ??= 'https://testlites.rajasthan.gov.in/AuthService/api/';
   }
 
   final Dio _dio;

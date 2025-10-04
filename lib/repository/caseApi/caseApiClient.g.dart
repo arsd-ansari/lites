@@ -14,7 +14,7 @@ class _CaseApiClient implements CaseApiClient {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://103.203.138.228/caseservices/api/';
+    baseUrl ??= 'https://testlites.rajasthan.gov.in/caseservices/api/';
   }
 
   final Dio _dio;

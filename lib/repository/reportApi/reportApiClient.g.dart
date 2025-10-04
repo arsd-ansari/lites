@@ -14,7 +14,7 @@ class _ReportApiClient implements ReportApiClient {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://103.203.138.228/reportservice/api/';
+    baseUrl ??= 'https://testlites.rajasthan.gov.in/reportservice/api/';
   }
 
   final Dio _dio;

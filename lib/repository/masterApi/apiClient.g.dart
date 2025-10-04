@@ -14,7 +14,7 @@ class _ApiClient implements ApiClient {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'http://103.203.138.228/masterservices/api/';
+    baseUrl ??= 'https://testlites.rajasthan.gov.in/masterservices/api/';
   }
 
   final Dio _dio;

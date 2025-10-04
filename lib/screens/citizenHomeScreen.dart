@@ -85,19 +85,19 @@ final List<MenuItem> mainMenuItems = [
     },
   ),
   MenuItem(
-    title: "Integrate High Court Search",
-    icon: Icons.pending_actions,
+    title: "High Court Service",
+    icon: Icons.gavel,
     subItems: {
-      "CNR Search": routes.orderPendingReport,
-      "Case Status": routes.replyNotFiledReport,
+      "CNR Search": routes.hCnrSearch,
+      "Case Status": routes.hCaseStatus,
     },
   ),
   MenuItem(
-    title: "Integrate E-Court Search",
-    icon: Icons.pending_actions,
+    title: "e-Court Service",
+    icon: Icons.gavel,
     subItems: {
-      "CNR Search": routes.orderPendingReport,
-      "Case Status": routes.replyNotFiledReport,
+      "CNR Search": routes.eCnrSearch,
+      "Case Status": routes.eCaseStatus,
     },
   ),
   MenuItem(

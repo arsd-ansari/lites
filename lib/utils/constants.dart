@@ -257,7 +257,7 @@ class Constants {
       ),
     );
   }*/
-  Widget buildTextField(String label, TextEditingController controller, {String hint = ''}) {
+  Widget buildTextField(String label, TextEditingController controller, {String hint = '', TextInputType? keyboardType}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Column(
@@ -276,7 +276,7 @@ class Constants {
               border: const OutlineInputBorder(),
               contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             ),
-            keyboardType: TextInputType.number,
+            keyboardType:keyboardType ?? TextInputType.number,
           ),
         ],
       ),
@@ -788,6 +788,7 @@ class Constants {
     required List<List<String>> rowData,
     Map<int, IconData>? iconColumns, // Optional: column index to icon
     void Function(int rowIndex, int columnIndex)? onIconPressed,
+    void Function(int rowIndex, String cnr)? onCnrPressed,
   })
   {
     return SingleChildScrollView(
@@ -819,6 +820,25 @@ class Constants {
                         onIconPressed(rowIndex, colIndex);
                       }
                     },
+                  );
+                } else if (colIndex == 0 && onCnrPressed != null) {
+
+                  return GestureDetector(
+                    onTap: () {
+                        onCnrPressed(rowIndex, row[colIndex]);
+                    },
+                    child: Container(
+                      alignment: Alignment.center,
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(
+                        row[colIndex],
+                        style: const TextStyle(
+                          color: Colors.blue,
+                          decoration: TextDecoration.underline,
+                        ),
+                        textAlign: TextAlign.center,
+                      ),
+                    ),
                   );
                 } else {
                   return _buildCell(row[colIndex]);

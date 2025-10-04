@@ -11,8 +11,12 @@ import 'package:lites/screens/common/dashboardScreen.dart';
 import 'package:lites/screens/common/loginPageScreen.dart';
 import 'package:lites/screens/common/splashPage.dart';
 import 'package:lites/screens/common/updateProfileScreen.dart';
+import 'package:lites/screens/eCNRSearch.dart';
+import 'package:lites/screens/eCaseStatus.dart';
 import 'package:lites/screens/forms/case_registration_form.dart';
 import 'package:lites/screens/forms/case_registration_view_details.dart';
+import 'package:lites/screens/hCNRSearch.dart';
+import 'package:lites/screens/hCaseStatus.dart';
 import 'package:lites/screens/reports/aagPerformanceReport.dart';
 import 'package:lites/screens/reports/actionPendingReport.dart';
 import 'package:lites/screens/reports/advocatePerformanceReport.dart';
@@ -130,6 +134,11 @@ class LITES extends StatelessWidget {
                 Routes().advocatePerformanceReport: (context) => AdvocatePerformanceReport(),
                 Routes().orderPendingReport: (context) => OrderPendingReport(),
                 Routes().replyNotFiledReport: (context) => ReplyNotFiledReport(),
+                Routes().hCnrSearch: (context) => HighCourtCNRSearch(),
+                Routes().hCaseStatus: (context) => HighCourtCaseStatus(),
+                Routes().eCnrSearch: (context) => ECourtCNRSearch(),
+                Routes().eCaseStatus: (context) => ECaseStatus(),
+
               }
             // onGenerateRoute: Routes.generateRoutes,
           ),
