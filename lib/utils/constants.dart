@@ -257,7 +257,7 @@ class Constants {
       ),
     );
   }*/
-  Widget buildTextField(String label, TextEditingController controller, {String hint = '', TextInputType? keyboardType}) {
+  Widget buildTextField(String label, TextEditingController controller, {String hint = ''}) {
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 6),
       child: Column(
@@ -276,7 +276,7 @@ class Constants {
               border: const OutlineInputBorder(),
               contentPadding: const EdgeInsets.symmetric(vertical: 15, horizontal: 10),
             ),
-            keyboardType:keyboardType ?? TextInputType.number,
+            keyboardType: TextInputType.number,
           ),
         ],
       ),
@@ -547,6 +547,23 @@ class Constants {
     );
   }*/
 
+  void presentDateFormatPicker(
+    BuildContext context, {
+    required Function(String) onDatePicked,
+  }) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1947),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate != null) {
+        final formatted = DateFormat('yyyy-MM-dd').format(pickedDate);
+        onDatePicked(formatted);
+      }
+    });
+  }
   void presentDatePicker(
     BuildContext context, {
     required Function(String) onDatePicked,
@@ -560,6 +577,23 @@ class Constants {
     ).then((pickedDate) {
       if (pickedDate != null) {
         final formatted = DateFormat('dd/MM/yyyy').format(pickedDate);
+        onDatePicked(formatted);
+      }
+    });
+  }
+  void datePicker(
+    BuildContext context, {
+    required Function(String) onDatePicked,
+  }) {
+    FocusManager.instance.primaryFocus?.unfocus();
+    showDatePicker(
+      context: context,
+      initialDate: DateTime.now(),
+      firstDate: DateTime(1947),
+      lastDate: DateTime.now(),
+    ).then((pickedDate) {
+      if (pickedDate != null) {
+        final formatted = DateFormat('yyyy-MM-dd').format(pickedDate);
         onDatePicked(formatted);
       }
     });
@@ -593,41 +627,6 @@ class Constants {
     return dt.toUtc().toIso8601String().split('.').first + '.' +
         dt.millisecond.toString().padLeft(3, '0') + 'Z';
   }
- /* Widget buildDatePickerTile({
-    required String label,
-    required String? selectedDate,
-    required VoidCallback onTap,
-  }) {
-    return Container(
-      padding: const EdgeInsets.all(0),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(10),
-        border: Border.all(color: Colors_App().deepGrey),
-      ),
-      child: ListTile(
-        title: RichText(
-          text: TextSpan(
-            text: label,
-            style: TextStyle(
-              color: Colors_App().blackcolor,
-              fontSize: Dimen_App().fontSize_12,
-              fontWeight: FontWeight.w500,
-            ),
-          ),
-        ),
-        subtitle: Text(
-          selectedDate ?? 'dd/mm/yyyy',
-          style: TextStyle(fontSize: Dimen_App().fontSize_14),
-        ),
-        trailing: Icon(
-          Icons.calendar_month,
-          color: Colors_App().main_color,
-          size: 15,
-        ),
-        onTap: onTap,
-      ),
-    );
-  }*/
 
   Widget buildDatePickerTile({
     required String label,
@@ -678,109 +677,79 @@ class Constants {
     );
   }
 
-  // without title
-  /*Widget buildCustomDataTable() {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Table(
-        border: TableBorder.symmetric(
-          inside: BorderSide(width: 1, color: Colors.grey.shade300),
-          outside: BorderSide(width: 1, color: Colors.grey),
-        ),
-        columnWidths: const {
-          0: FixedColumnWidth(80),
-          1: FixedColumnWidth(180),
-          2: FixedColumnWidth(100),
-          3: FixedColumnWidth(100),
-          4: FixedColumnWidth(200),
-        },
+  Widget buildDateFormatPickerTile({
+    required String label,
+    required String? selectedDate,
+    required VoidCallback onTap,
+  }) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(vertical: 6),
+      child: Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
         children: [
-          // Header Row
-          TableRow(
-            decoration: BoxDecoration(color: Colors.grey.shade200),
-            children: [
-              _buildCell('Sr. No', isHeader: true),
-              _buildCell('Activity', isHeader: true),
-              _buildCell('Date', isHeader: true),
-              _buildCell('Number', isHeader: true),
-              _buildCell('Remarks', isHeader: true),
-            ],
+          Text(
+            label,
+            style: TextStyle(
+              fontSize: Dimen_App().fontSize_16,
+              fontWeight: FontWeight.w500,
+              color: Colors_App().blackcolor,
+            ),
           ),
-          // Data Row
-          TableRow(
-            children: [
-              _buildCell('1'),
-              _buildCell('Application submitted'),
-              _buildCell('15/03/24'),
-              _buildCell('542134'),
-              _buildCell('Info submitted'),
-            ],
+          const SizedBox(height: 4),
+          // The container with the date value
+          InkWell(
+            onTap: onTap,
+            child: Container(
+              padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 14),
+              decoration: BoxDecoration(
+                borderRadius: BorderRadius.circular(10),
+                border: Border.all(color: Colors_App().deepGrey),
+              ),
+              child: Row(
+                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                children: [
+                  Text(
+                    selectedDate ?? 'yyyy-MM-dd',
+                    style: TextStyle(fontSize: Dimen_App().fontSize_16),
+                  ),
+                  Icon(
+                    Icons.calendar_month,
+                    color: Colors_App().main_color,
+                    size: 15,
+                  ),
+                ],
+              ),
+            ),
           ),
-          TableRow(
-            children: [
-              _buildCell('2'),
-              _buildCell('Application not submitted'),
-              _buildCell('25/03/25'),
-              _buildCell('5811234'),
-              _buildCell('Info not recieved'),
-            ],
-          ),
-          // Add more rows as needed
         ],
       ),
     );
   }
 
-  Widget _buildCell(String text, {bool isHeader = false}) {
-    return Container(
-      padding: const EdgeInsets.all(12),
-      alignment: Alignment.centerLeft,
-      decoration: BoxDecoration(
-        border: Border(
-          right: BorderSide(color: Colors.grey.shade300, width: 1),
-        ),
-      ),
-      child: Text(
-        text,
-        style: TextStyle(
-          fontWeight: isHeader ? FontWeight.bold : FontWeight.normal,
-        ),
-      ),
-    );
-  }*/
+  void futureDateFormatPicker(
+      BuildContext context, {
+        required Function(String) onDatePicked,
+      }) {
+    FocusManager.instance.primaryFocus?.unfocus();
 
-  //without icon
-  /*Widget buildCustomDataTable({
-    required List<String> columnTitles,
-    required List<List<String>> rowData,
-  }) {
-    return SingleChildScrollView(
-      scrollDirection: Axis.horizontal,
-      child: Table(
-        border: TableBorder.symmetric(
-          inside: const BorderSide(width: 1, color: Colors.grey),
-          outside: const BorderSide(width: 1, color: Colors.black),
-        ),
-        defaultColumnWidth: const IntrinsicColumnWidth(),
-        children: [
-          // Header
-          TableRow(
-            decoration: BoxDecoration(color: Colors.grey.shade300),
-            children:
-                columnTitles
-                    .map((title) => _buildCell(title, isHeader: true))
-                    .toList(),
-          ),
-          // Rows
-          ...rowData.map((row) {
-            return TableRow(
-              children: row.map((cell) => _buildCell(cell)).toList(),
-            );
-          }).toList(),
-        ],
-      ),
-    );
-  }*/
+    final now = DateTime.now();
+    final oneMonthLater = DateTime(now.year, now.month + 1, now.day);
+
+    showDatePicker(
+      context: context,
+      initialDate: now,
+      firstDate: DateTime(1947),
+      lastDate: oneMonthLater,
+      selectableDayPredicate: (DateTime day) {
+        return !day.isAfter(oneMonthLater);
+      },
+    ).then((pickedDate) {
+      if (pickedDate != null) {
+        final formatted = DateFormat('yyyy-MM-dd').format(pickedDate);
+        onDatePicked(formatted);
+      }
+    });
+  }
 
   // with  icon
   Widget buildCustomDataTableWithIcon({
@@ -788,7 +757,6 @@ class Constants {
     required List<List<String>> rowData,
     Map<int, IconData>? iconColumns, // Optional: column index to icon
     void Function(int rowIndex, int columnIndex)? onIconPressed,
-    void Function(int rowIndex, String cnr)? onCnrPressed,
   })
   {
     return SingleChildScrollView(
@@ -820,25 +788,6 @@ class Constants {
                         onIconPressed(rowIndex, colIndex);
                       }
                     },
-                  );
-                } else if (colIndex == 0 && onCnrPressed != null) {
-
-                  return GestureDetector(
-                    onTap: () {
-                        onCnrPressed(rowIndex, row[colIndex]);
-                    },
-                    child: Container(
-                      alignment: Alignment.center,
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        row[colIndex],
-                        style: const TextStyle(
-                          color: Colors.blue,
-                          decoration: TextDecoration.underline,
-                        ),
-                        textAlign: TextAlign.center,
-                      ),
-                    ),
                   );
                 } else {
                   return _buildCell(row[colIndex]);

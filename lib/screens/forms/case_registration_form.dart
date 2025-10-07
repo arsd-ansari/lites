@@ -515,7 +515,6 @@ class _CaseRegistrationFormState extends State<CaseRegistrationForm> {
       if (kDebugMode) {
         print('➡️ Raw request: ${jsonEncode(req.toJson())}');
       }
-     // final encryptedRequest = {"data": EncryptionHelper.encryptData(req.toJson()),};
 
       final encryptedData = await EncryptionHelper.encryptData(req.toJson());
       final encryptedRequest = {"data": encryptedData};

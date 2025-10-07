@@ -62,15 +62,12 @@ dependencies:
   flutter_lints: ^5.0.0
   fl_chart: ^0.68.0 # Use the latest version
   cupertino_icons: ^1.0.8
-  syncfusion_flutter_datagrid: ^25.2.7
+  syncfusion_flutter_datagrid: ^25.2.3
   network_info_plus: ^5.0.1 # Use the latest version
   public_ip_address: ^1.0.0
   flutter_secure_storage: ^9.2.4
   encrypt: ^5.0.1
   dart_ipify: ^1.1.1
-  syncfusion_flutter_xlsio: ^25.2.7
-  open_filex: ^4.4.0
-  syncfusion_flutter_pdf: ^25.2.7
 
 dev_dependencies:
   flutter_test:

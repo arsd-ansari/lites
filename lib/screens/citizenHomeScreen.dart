@@ -85,33 +85,33 @@ final List<MenuItem> mainMenuItems = [
     },
   ),
   MenuItem(
-    title: "High Court Service",
-    icon: Icons.gavel,
+    title: "Integrate High Court Search",
+    icon: Icons.manage_search_outlined,
     subItems: {
-      "CNR Search": routes.hCnrSearch,
-      "Case Status": routes.hCaseStatus,
+      "CNR Search": routes.orderPendingReport,
+      "Case Status": routes.replyNotFiledReport,
     },
   ),
   MenuItem(
-    title: "e-Court Service",
-    icon: Icons.gavel,
+    title: "Integrate E-Court Search",
+    icon: Icons.format_align_justify,
     subItems: {
-      "CNR Search": routes.eCnrSearch,
-      "Case Status": routes.eCaseStatus,
+      "CNR Search": routes.orderPendingReport,
+      "Case Status": routes.replyNotFiledReport,
     },
   ),
   MenuItem(
     title: "High Court Cause List",
-    icon: Icons.pending_actions,
+    icon: Icons.list_alt,
     subItems: {
-      "Cause List Data": routes.orderPendingReport,
+      "Cause List Data": routes.causeList,
     },
   ),
   MenuItem(
     title: "Generic Search",
-    icon: Icons.pending_actions,
+    icon: Icons.search,
     subItems: {
-      "Advance Search": routes.orderPendingReport,
+      "Advance Search": routes.advanceSearch,
     },
   ),
 ];
