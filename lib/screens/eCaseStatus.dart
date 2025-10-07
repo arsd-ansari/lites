@@ -36,7 +36,7 @@ class _ECaseStatusState extends State<ECaseStatus> {
   final TextEditingController caseNumberCon = TextEditingController();
   final TextEditingController yearCon = TextEditingController();
 
-  List<String> columnTitlesDetails1 = [
+  List<String> columnTitlesDetail = [
     'CNR NO.',
     'Type Name',
     'Registration Number',
@@ -44,25 +44,31 @@ class _ECaseStatusState extends State<ECaseStatus> {
     'Petitioner Name',
     'Respondent Name'
   ];
-  List<List<String>> rowDataDetails1 = [];
+  List<List<String>> rowDataDetail = [];
   String est_name= "";
 
   bool isLoading = false;
   bool _isDataVisible = false;
 
-  List<String> columnTitlesDetails = [
+  List<String> columnTitlesDetails1 = [
     'Case Type',
     'Filing Number',
     'Filing Date',
+  ];
+  List<String> columnTitlesDetails2 = [
     'Registration Number',
     'Registration Date',
     'CNR Number',
   ];
-  List<String> columnTitlesStatus = [
+  List<String> columnTitlesStatus1 = [
     'First Hearing Date',
     'Next Hearing Date',
     'Decision Date',
     'Stage of Case',
+
+  ];
+  List<String> columnTitlesStatus2 = [
+
     'Nature of Disposal',
     'Court Number and Judge',
     'Petitioner and Advocate',
@@ -75,8 +81,10 @@ class _ECaseStatusState extends State<ECaseStatus> {
     'Hearing Date',
     'Purpose of hearing',
   ];
-  List<List<String>> rowDataDetails = [];
-  List<List<String>> rowDataStatus = [];
+  List<List<String>> rowDataDetails1 = [];
+  List<List<String>> rowDataStatus1 = [];
+  List<List<String>> rowDataDetails2 = [];
+  List<List<String>> rowDataStatus2 = [];
   List<List<String>> rowDataHistory = [];
 
   @override
@@ -197,7 +205,7 @@ class _ECaseStatusState extends State<ECaseStatus> {
                 ),
               ),
             ),
-            if(rowDataDetails1.isNotEmpty)
+            if(rowDataDetail.isNotEmpty)
               Card(
                 elevation: 2,
                 child: Padding(
@@ -224,8 +232,8 @@ class _ECaseStatusState extends State<ECaseStatus> {
                           ),
                         ),
                         Constants().buildCustomDataTableWithIcon(
-                          columnTitles: columnTitlesDetails1,
-                          rowData: rowDataDetails1,
+                          columnTitles: columnTitlesDetail,
+                          rowData: rowDataDetail,
                           iconColumns: {6: Icons.pending_actions_sharp},
                           onIconPressed: (rowIndex, colIndex) {},
                           onCnrPressed: (rowIndex, cnr) {
@@ -270,8 +278,14 @@ class _ECaseStatusState extends State<ECaseStatus> {
                         ),
                         const SizedBox(height: 10),
                         Constants().buildCustomDataTableWithIcon(
-                          columnTitles: columnTitlesDetails,
-                          rowData: rowDataDetails,
+                          columnTitles: columnTitlesDetails1,
+                          rowData: rowDataDetails1,
+                          iconColumns: {6: Icons.pending_actions_sharp},
+                          onIconPressed: (rowIndex, colIndex) {},
+                        ),
+                        Constants().buildCustomDataTableWithIcon(
+                          columnTitles: columnTitlesDetails2,
+                          rowData: rowDataDetails2,
                           iconColumns: {6: Icons.pending_actions_sharp},
                           onIconPressed: (rowIndex, colIndex) {},
                         ),
@@ -286,8 +300,13 @@ class _ECaseStatusState extends State<ECaseStatus> {
                         ),
                         const SizedBox(height: 10),
                         Constants().buildCustomDataTableWithIcon(
-                          columnTitles: columnTitlesStatus,
-                          rowData: rowDataStatus,
+                          columnTitles: columnTitlesStatus1,
+                          rowData: rowDataStatus1,
+                          onIconPressed: (rowIndex, colIndex) {},
+                        ),
+                        Constants().buildCustomDataTableWithIcon(
+                          columnTitles: columnTitlesStatus2,
+                          rowData: rowDataStatus2,
                           onIconPressed: (rowIndex, colIndex) {},
                         ),
                         const SizedBox(height: 20),
@@ -336,22 +355,30 @@ class _ECaseStatusState extends State<ECaseStatus> {
 
       if (response.status == true && response.data != null) {
         setState(() {
-          rowDataDetails = [
+          rowDataDetails1 = [
             [
               (response.data?.data?.typeName?? "--"),
               "${response.data?.data?.filNo}/${response.data?.data?.filYear?? "--"}",
               (response.data?.data?.dateOfFiling?.reverseThisDate() ?? "--"),
+            ],
+          ];
+          rowDataDetails2 = [
+            [
               "${response.data?.data?.regNo}/${response.data?.data?.regYear?? "--"}",
               (response.data?.data?.dtRegis?.reverseThisDate() ?? "--"),
               (response.data?.data?.cino?? "--"),
             ],
           ];
-          rowDataStatus = [
+          rowDataStatus1 = [
             [
               (response.data?.data?.dateFirstList?.isNotEmpty ?? false ? "${response.data?.data?.dateFirstList?.reverseThisDate()}" : "--"),
               (response.data?.data?.dateNextList?.isNotEmpty ?? false ? "${response.data?.data?.dateNextList?.reverseThisDate()}" : "--"),
               (response.data?.data?.dateLastList?.isNotEmpty ?? false ? "${response.data?.data?.dateLastList?.reverseThisDate()}" : "--"),
               (response.data?.data?.purposeName ?? "--"),
+            ],
+          ];
+          rowDataStatus2 = [
+            [
               "${response.data?.data?.dispName ?? "--"}",
               (response.data?.data?.desgname ?? "--"),
               "${response.data?.data?.petName ?? "--"}, Advocate - ${response.data?.data?.petAdv ?? "--"}",
@@ -412,7 +439,7 @@ class _ECaseStatusState extends State<ECaseStatus> {
       if (response.status == true && response.data != null) {
         setState(() {
           est_name = response.data?.establishmentName ?? "";
-          rowDataDetails1 = [
+          rowDataDetail = [
             [
               (response.data?.casenos?.case1?.cino?? "--"),
               "${response.data?.casenos?.case1?.typeName?? "--"}",

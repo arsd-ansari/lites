@@ -42,32 +42,36 @@ class _HighCourtCaseStatusState extends State<HighCourtCaseStatus> {
   final TextEditingController caseNumberCon = TextEditingController();
   final TextEditingController yearCon = TextEditingController();
 
-  List<String> columnTitlesDetails1 = [
+  List<String> columnTitlesDetail = [
     'CNR NO.',
     'Type Name',
     'Registration Number',
     'Registration Year',
     'Petitioner Name',
   ];
-  List<List<String>> rowDataDetails1 = [];
+  List<List<String>> rowDataDetail = [];
 
 
   bool isLoading = false;
   bool _isDataVisible = false;
 
-  List<String> columnTitlesDetails = [
+  List<String> columnTitlesDetails1 = [
     'Case Type',
     'Filing Number',
     'Filing Date',
+  ];
+  List<String> columnTitlesDetails2 = [
     'Registration Number',
     'Registration Date',
     'CNR Number',
   ];
-  List<String> columnTitlesStatus = [
+  List<String> columnTitlesStatus1 = [
     'First Hearing Date',
     'Next Hearing Date',
     'Decision Date',
     'Stage of Case',
+  ];
+  List<String> columnTitlesStatus2 = [
     'Nature of Disposal',
     'Court Number and Judge',
     'Petitioner and Advocate',
@@ -80,8 +84,10 @@ class _HighCourtCaseStatusState extends State<HighCourtCaseStatus> {
     'Hearing Date',
     'Purpose of hearing',
   ];
-  List<List<String>> rowDataDetails = [];
-  List<List<String>> rowDataStatus = [];
+  List<List<String>> rowDataDetails1 = [];
+  List<List<String>> rowDataDetails2 = [];
+  List<List<String>> rowDataStatus1 = [];
+  List<List<String>> rowDataStatus2 = [];
   List<List<String>> rowDataHistory = [];
 
 
@@ -180,7 +186,7 @@ class _HighCourtCaseStatusState extends State<HighCourtCaseStatus> {
                     ),
                   ),
                 ),
-              if(rowDataDetails1.isNotEmpty)
+              if(rowDataDetail.isNotEmpty)
                 Card(
                   elevation: 2,
                   child: Padding(
@@ -218,8 +224,8 @@ class _HighCourtCaseStatusState extends State<HighCourtCaseStatus> {
                             ),
                           ),
                           Constants().buildCustomDataTableWithIcon(
-                            columnTitles: columnTitlesDetails1,
-                            rowData: rowDataDetails1,
+                            columnTitles: columnTitlesDetail,
+                            rowData: rowDataDetail,
                             iconColumns: {6: Icons.pending_actions_sharp},
                             onIconPressed: (rowIndex, colIndex) {},
                             onCnrPressed: (rowIndex, cnr) {
@@ -263,8 +269,14 @@ class _HighCourtCaseStatusState extends State<HighCourtCaseStatus> {
                           ),
                           const SizedBox(height: 10),
                           Constants().buildCustomDataTableWithIcon(
-                            columnTitles: columnTitlesDetails,
-                            rowData: rowDataDetails,
+                            columnTitles: columnTitlesDetails1,
+                            rowData: rowDataDetails1,
+                            iconColumns: {6: Icons.pending_actions_sharp},
+                            onIconPressed: (rowIndex, colIndex) {},
+                          ),
+                          Constants().buildCustomDataTableWithIcon(
+                            columnTitles: columnTitlesDetails2,
+                            rowData: rowDataDetails2,
                             iconColumns: {6: Icons.pending_actions_sharp},
                             onIconPressed: (rowIndex, colIndex) {},
                           ),
@@ -279,8 +291,13 @@ class _HighCourtCaseStatusState extends State<HighCourtCaseStatus> {
                           ),
                           const SizedBox(height: 10),
                           Constants().buildCustomDataTableWithIcon(
-                            columnTitles: columnTitlesStatus,
-                            rowData: rowDataStatus,
+                            columnTitles: columnTitlesStatus1,
+                            rowData: rowDataStatus1,
+                            onIconPressed: (rowIndex, colIndex) {},
+                          ),
+                          Constants().buildCustomDataTableWithIcon(
+                            columnTitles: columnTitlesStatus2,
+                            rowData: rowDataStatus2,
                             onIconPressed: (rowIndex, colIndex) {},
                           ),
                           const SizedBox(height: 20),
@@ -377,7 +394,7 @@ class _HighCourtCaseStatusState extends State<HighCourtCaseStatus> {
       if (response.status == true && response.data != null) {
         // {"status":true,"message":"Success","data":{"establishment_name":"High Court Bench at Jaipur","casenos":{"case1":{"cino":"RJHC020882222023","type_name":"CW","reg_no":"17274","reg_year":"2023","pet_name":"MANOJ BAIRWA S/O LAL CHAND BAIRWA","res_name":"STATE OF GOVENRMENT","police_st_code":""}}}}
         setState(() {
-          rowDataDetails1 = [
+          rowDataDetail = [
             [
               (response.data?.casenos?.case1?.cino?? "--"),
               "${response.data?.casenos?.case1?.typeName?? "--"}",
@@ -426,22 +443,30 @@ class _HighCourtCaseStatusState extends State<HighCourtCaseStatus> {
 
       if (response.status == true && response.data != null) {
         setState(() {
-          rowDataDetails = [
+          rowDataDetails1 = [
             [
               (response.data?.typeNameFil?? "--"),
               "${response.data?.filNo}/${response.data?.filYear?? "--"}",
               (response.data?.dateOfFiling?.reverseThisDate() ?? "--"),
+            ],
+          ];
+          rowDataDetails2 = [
+            [
               "${response.data?.regNo}/${response.data?.regYear?? "--"}",
               (response.data?.dtRegis?.reverseThisDate() ?? "--"),
               (response.data?.cino?? "--"),
             ],
           ];
-          rowDataStatus = [
+          rowDataStatus1 = [
             [
               (response.data?.dateFirstList?.isNotEmpty ?? false ? "${response.data?.dateFirstList?.reverseThisDate()}" : "--"),
               (response.data?.dateNextList?.isNotEmpty ?? false ? "${response.data?.dateNextList?.reverseThisDate()}" : "--"),
               (response.data?.dateLastList?.isNotEmpty ?? false ? "${response.data?.dateLastList?.reverseThisDate()}" : "--"),
               (response.data?.purposeName ?? "--"),
+            ],
+          ];
+          rowDataStatus2 = [
+            [
               "${response.data?.disposalType ?? "--"}",
               (response.data?.desgname ?? "--"),
               "${response.data?.petName ?? "--"}, Advocate - ${response.data?.petAdv ?? "--"}",
