@@ -4,6 +4,7 @@ import 'package:dio/dio.dart';
 import 'package:dio/io.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/foundation.dart';
+import 'package:lites/models/responses/GetDepDropDownListModel.dart';
 import 'package:lites/models/responses/reports/GetAttentionWarrantReportModel.dart';
 import 'package:lites/models/responses/reports/GetDeficiencyReportModel.dart';
 import 'package:lites/models/responses/reports/GetEnytryStatusReportModel.dart';
@@ -12,6 +13,7 @@ import 'package:lites/models/responses/reports/GetSummaryReportModel.dart';
 import 'package:retrofit/http.dart';
 import 'package:retrofit/retrofit.dart';
 import '../../../../utils/AppConstants.dart';
+import '../../models/responses/reports/GetCauseDropDownListModel.dart';
 import '../../utils/routes.dart';
 import '../../utils/storageService.dart';
 import '../masterApi/apiClient.dart';
@@ -121,6 +123,31 @@ abstract class ReportApiClient {
 
   @POST('PendingCasesReport/GetReplyNotFiledReport')
   Future<String> getReplyNtFiledReportDetails(@Body() Map<String, dynamic> body);
+
+  // cause list
+  @GET('CauseList/GetCourtRoomDropdownList')
+  Future<GetCauseDropDownListModel> getCourtRoomDetails(
+      @Query("CauseListDateFrom") String CauseListDateFrom,
+      @Query("CauseListDateTo") String CauseListDateTo,
+      @Query("Estt") String Estt,
+      );
+
+  @GET('CauseList/GetJudgeNameDropdownList')
+  Future<GetCauseDropDownListModel> getJudgeNameDetails(
+      @Query("CauseListDateFrom") String CauseListDateFrom,
+      @Query("CauseListDateTo") String CauseListDateTo,
+      @Query("Estt") String Estt,
+      );
+
+  @GET('CauseList/GetDepartmentNameDropdownList')
+  Future<GetCauseDropDownListModel> getCauseDeptDDDetails( );
+
+  @POST('CauseList/GetCauseListReport')
+  Future<String> getCauseListDetails(@Body() Map<String, dynamic> body);
+
+  @POST('GenericSearch/GetGenericSearchList')
+  Future<String> getAdvanceSearchDetails(@Body() Map<String, dynamic> body);
+
 }
 
 class ReportApiServiceApiclient {

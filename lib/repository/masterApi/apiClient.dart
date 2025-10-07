@@ -27,7 +27,6 @@ abstract class ApiClient {
   Future<GetDepDropDownListModel> getOfficeList(@Query("UnitId") int UnitId);
 
   @GET('CourtTypes/GetCourtTypesDropdownList')
-
   Future<GetDepDropDownListModel> getCourtTypeList(
     @Query("CourtTypeId") int CourtTypeId,
   );
@@ -66,6 +65,7 @@ abstract class ApiClient {
     @Query("LDesignation") int LDesignation,
     @Query("LawyerId") int LawyerId,
   );
+
 }
 
 class ApiServiceApiclient {

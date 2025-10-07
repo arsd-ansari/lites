@@ -3,20 +3,18 @@ import 'dart:io';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:lites/screens/advanceSearch.dart';
 import 'package:lites/screens/caseDecidedOnFirstHearing.dart';
 import 'package:lites/screens/caseManagementScreen.dart';
 import 'package:lites/screens/caseWithoutCaseNo.dart';
+import 'package:lites/screens/causeListData.dart';
 import 'package:lites/screens/citizenHomeScreen.dart';
 import 'package:lites/screens/common/dashboardScreen.dart';
 import 'package:lites/screens/common/loginPageScreen.dart';
 import 'package:lites/screens/common/splashPage.dart';
 import 'package:lites/screens/common/updateProfileScreen.dart';
-import 'package:lites/screens/eCNRSearch.dart';
-import 'package:lites/screens/eCaseStatus.dart';
 import 'package:lites/screens/forms/case_registration_form.dart';
 import 'package:lites/screens/forms/case_registration_view_details.dart';
-import 'package:lites/screens/hCNRSearch.dart';
-import 'package:lites/screens/hCaseStatus.dart';
 import 'package:lites/screens/reports/aagPerformanceReport.dart';
 import 'package:lites/screens/reports/actionPendingReport.dart';
 import 'package:lites/screens/reports/advocatePerformanceReport.dart';
@@ -134,10 +132,10 @@ class LITES extends StatelessWidget {
                 Routes().advocatePerformanceReport: (context) => AdvocatePerformanceReport(),
                 Routes().orderPendingReport: (context) => OrderPendingReport(),
                 Routes().replyNotFiledReport: (context) => ReplyNotFiledReport(),
-                Routes().hCnrSearch: (context) => HighCourtCNRSearch(),
-                Routes().hCaseStatus: (context) => HighCourtCaseStatus(),
-                Routes().eCnrSearch: (context) => ECourtCNRSearch(),
-                Routes().eCaseStatus: (context) => ECaseStatus(),
+
+                //new dev
+                Routes().causeList: (context) => CauseListData(),
+                Routes().advanceSearch: (context) => AdvanceSearch(),
 
               }
             // onGenerateRoute: Routes.generateRoutes,

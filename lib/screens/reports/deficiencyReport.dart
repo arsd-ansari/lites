@@ -251,8 +251,7 @@ class _DeficiencyReportState extends State<DeficiencyReport> {
                             setState(() {
                               selectedDist = newValue;
                             });
-                            distId =
-                            int.tryParse(newValue?.value ?? '0')!;
+                            distId = int.tryParse(newValue?.value ?? '0')!;
                           },
                           labelExtractor: (data) => data.text ?? '',
                           selectHint: 'Select District',

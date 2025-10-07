@@ -17,9 +17,9 @@ import 'dimen_app.dart';
 
 class EssentialDialogs {
   openOkDismissDialog(
-      BuildContext context,
-      EssentialDialogModel appDialogModel,
-      ) {
+    BuildContext context,
+    EssentialDialogModel appDialogModel,
+  ) {
     FocusManager.instance.primaryFocus?.unfocus();
     return showDialog(
       context: context,
@@ -57,6 +57,24 @@ class EssentialDialogs {
                         width: appDialogModel.logoWidth,
                         height: appDialogModel.logoHeight,
                       ),
+                      Visibility(
+                        visible: false,
+                        child: Center(
+                          child: Container(
+                            margin: const EdgeInsets.symmetric(
+                              vertical: 5.0,
+                              horizontal: 10.0,
+                            ),
+                            child: Text(
+                              appDialogModel.appTitle,
+                              style: GoogleFonts.montserrat(
+                                fontSize: 22.0,
+                                fontWeight: FontWeight.bold,
+                              ),
+                            ),
+                          ),
+                        ),
+                      ),
                       Container(
                         margin: const EdgeInsets.only(
                           top: 30,
@@ -74,67 +92,35 @@ class EssentialDialogs {
                           softWrap: true,
                         ),
                       ),
-
-                      // ✅ Buttons Section
-                      Row(
-                        children: [
-                          if (appDialogModel.negativeText.isNotEmpty)
-                            Expanded(
-                              child: Container(
-                                decoration: BoxDecoration(
-                                  color: Colors.grey.shade600,
-                                  borderRadius: const BorderRadius.only(
-                                    bottomLeft: Radius.circular(25.0),
-                                  ),
-                                ),
-                                child: TextButton(
-                                  onPressed: () {
-                                    Navigator.pop(context, false);
-                                    if (appDialogModel.onNegative != null) {
-                                      appDialogModel.onNegative!();
-                                    }
-                                  },
-                                  child: Text(
-                                    appDialogModel.negativeText,
-                                    style: GoogleFonts.montserrat(
-                                      color: Colors_App().whitecolor,
-                                      fontWeight: FontWeight.bold,
-                                      fontSize: 18,
-                                    ),
-                                  ),
-                                ),
-                              ),
-                            ),
-                          Expanded(
-                            child: Container(
-                              decoration: BoxDecoration(
-                                color: appDialogModel.myColor,
-                                borderRadius: BorderRadius.only(
-                                  bottomRight: const Radius.circular(25.0),
-                                  bottomLeft: appDialogModel.negativeText.isEmpty
-                                      ? const Radius.circular(25.0)
-                                      : Radius.zero,
-                                ),
-                              ),
-                              child: TextButton(
-                                onPressed: () {
-                                  Navigator.pop(context, true);
-                                  if (appDialogModel.onPositive != null) {
-                                    appDialogModel.onPositive!();
-                                  }
-                                },
-                                child: Text(
-                                  appDialogModel.positiveText,
-                                  style: GoogleFonts.montserrat(
-                                    color: Colors_App().whitecolor,
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 18,
-                                  ),
-                                ),
-                              ),
-                            ),
+                      Container(
+                        decoration: BoxDecoration(
+                          color: appDialogModel.myColor,
+                          borderRadius: const BorderRadius.only(
+                            bottomLeft: Radius.circular(25.0),
+                            bottomRight: Radius.circular(25.0),
                           ),
-                        ],
+                        ),
+                        child: TextButton(
+                          onPressed: () {
+                            appDialogModel.isOkClicked = true;
+                            Navigator.pop(context, true);
+                          },
+                          child: Row(
+                            mainAxisSize: MainAxisSize.max,
+                            mainAxisAlignment: MainAxisAlignment.spaceAround,
+                            children: [
+                              Text(
+                                String_App().btnOk,
+                                style: GoogleFonts.montserrat(
+                                  color: Colors_App().whitecolor,
+                                  fontWeight: FontWeight.bold,
+                                  fontSize: 20,
+                                ),
+                                textAlign: TextAlign.center,
+                              ),
+                            ],
+                          ),
+                        ),
                       ),
                     ],
                   ),
@@ -146,7 +132,6 @@ class EssentialDialogs {
       },
     );
   }
-
 
   //TODO
   openLogOutDialog(BuildContext context, EssentialDialogModel appDialogModel) {

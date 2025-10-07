@@ -114,7 +114,6 @@ class _TalkingPointsReportState extends State<TalkingPointsReport> {
             children: [
               Row(
                 children: [
-
                   const Spacer(),
                   ElevatedButton(
                     onPressed: () {
