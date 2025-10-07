@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'highCourtApiClient.dart';
+part of 'masterApiClient.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,13 +8,13 @@ part of 'highCourtApiClient.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers,unused_element
 
-class _HighCourtApiClient implements HighCourtApiClient {
-  _HighCourtApiClient(
+class _MasterApiClient implements MasterApiClient {
+  _MasterApiClient(
     this._dio, {
     this.baseUrl,
     this.errorLogger,
   }) {
-    baseUrl ??= 'https://testlites.rajasthan.gov.in/HCService/api/';
+    baseUrl ??= 'https://testlites.rajasthan.gov.in/LitesGateway/Master/';
   }
 
   final Dio _dio;
@@ -24,19 +24,19 @@ class _HighCourtApiClient implements HighCourtApiClient {
   final ParseErrorLogger? errorLogger;
 
   @override
-  Future<GetDetailByCnrModel> getDetailByCNR(String CinNo) async {
+  Future<GetCauseDropDownListModel> getCauseLawyerList() async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'CinNo': CinNo};
+    final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<GetDetailByCnrModel>(Options(
+    final _options = _setStreamType<GetCauseDropDownListModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'HighCourtService/GetDetailByCNR/SearchByCnr',
+          'Lawyers/GetDepDropdown',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -46,9 +46,9 @@ class _HighCourtApiClient implements HighCourtApiClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late GetDetailByCnrModel _value;
+    late GetCauseDropDownListModel _value;
     try {
-      _value = GetDetailByCnrModel.fromJson(_result.data!);
+      _value = GetCauseDropDownListModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;
@@ -57,19 +57,19 @@ class _HighCourtApiClient implements HighCourtApiClient {
   }
 
   @override
-  Future<CaseTypeResponse> getDetailCaseType(String EstCode) async {
+  Future<GetCauseDropDownListModel> getCauseOicList(int UnitId) async {
     final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{r'EstCode': EstCode};
+    final queryParameters = <String, dynamic>{r'UnitId': UnitId};
     final _headers = <String, dynamic>{};
     const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<CaseTypeResponse>(Options(
+    final _options = _setStreamType<GetCauseDropDownListModel>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
     )
         .compose(
           _dio.options,
-          'HighCourtService/GetDetailCaseType/CaseTypeMaster',
+          'OICs/GetDropdown',
           queryParameters: queryParameters,
           data: _data,
         )
@@ -79,52 +79,9 @@ class _HighCourtApiClient implements HighCourtApiClient {
           baseUrl,
         )));
     final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CaseTypeResponse _value;
+    late GetCauseDropDownListModel _value;
     try {
-      _value = CaseTypeResponse.fromJson(_result.data!);
-    } on Object catch (e, s) {
-      errorLogger?.logError(e, s, _options);
-      rethrow;
-    }
-    return _value;
-  }
-
-  @override
-  Future<CaseDetailResponse> getDetailByCaseNumber(
-    String EstCode,
-    String caseType,
-    String caseNo,
-    String regYear,
-  ) async {
-    final _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{
-      r'EstCode': EstCode,
-      r'CaseType': caseType,
-      r'CaseNumber': caseNo,
-      r'RegYear': regYear,
-    };
-    final _headers = <String, dynamic>{};
-    const Map<String, dynamic>? _data = null;
-    final _options = _setStreamType<CaseDetailResponse>(Options(
-      method: 'POST',
-      headers: _headers,
-      extra: _extra,
-    )
-        .compose(
-          _dio.options,
-          'HighCourtService/GetDetailByCaseNumber/SearchByCaseNumber',
-          queryParameters: queryParameters,
-          data: _data,
-        )
-        .copyWith(
-            baseUrl: _combineBaseUrls(
-          _dio.options.baseUrl,
-          baseUrl,
-        )));
-    final _result = await _dio.fetch<Map<String, dynamic>>(_options);
-    late CaseDetailResponse _value;
-    try {
-      _value = CaseDetailResponse.fromJson(_result.data!);
+      _value = GetCauseDropDownListModel.fromJson(_result.data!);
     } on Object catch (e, s) {
       errorLogger?.logError(e, s, _options);
       rethrow;

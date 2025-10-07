@@ -1,13 +1,8 @@
-import 'dart:io';
-
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
-import 'package:open_filex/open_filex.dart';
-import 'package:path_provider/path_provider.dart';
 
 import 'package:syncfusion_flutter_datagrid/datagrid.dart';
-import 'package:syncfusion_flutter_pdf/pdf.dart';
 
 import '../../models/essentialdialog_model.dart';
 import '../../models/responses/GetDepDropDownListModel.dart';
@@ -19,7 +14,6 @@ import '../../utils/essentialdialog.dart';
 import '../../utils/litesAppBar.dart';
 import '../../utils/string_app.dart';
 import 'package:lites/screens/reports/entryStatusReport.dart' as entry;
-import 'package:syncfusion_flutter_xlsio/xlsio.dart' as xlsio;
 
 
 class EntryStatusReport extends StatefulWidget {
@@ -66,158 +60,6 @@ class _EntryStatusReportState extends State<EntryStatusReport> {
       getEntryStatusDetails();
     });
   }
-
-
-  Future<void> exportEntryStatusToExcel({
-    required List<EntryRowModel> overallRows,
-    required List<EntryRowModel> todayRows,
-    required BuildContext context,
-  }) async {
-    final workbook = xlsio.Workbook();
-    final sheet = workbook.worksheets[0];
-    sheet.name = "Entry Status Report";
-
-    final headers = [
-      "Type",
-      "Regist.",
-      "Pett./App.",
-      "Non-Pett./Res.",
-      "Advocate",
-      "OIC",
-      "Hearing",
-      "Decision",
-      "Contempt",
-      "Demand of Justice",
-      "Notice 80 CPC",
-      "Arbitration",
-      "Total"
-    ];
-
-    // Style for headers
-    final headerStyle = workbook.styles.add('headerStyle');
-    headerStyle.bold = true;
-    headerStyle.hAlign = xlsio.HAlignType.center;
-    headerStyle.vAlign = xlsio.VAlignType.center;
-    headerStyle.backColor = '#D9E1F2';
-
-    int currentRow = 1;
-
-    // 🟦 Section 1: Overall Status
-    sheet.getRangeByIndex(currentRow, 1).setText("Overall Entry Status");
-    sheet.getRangeByIndex(currentRow, 1, currentRow, headers.length).merge();
-    sheet.getRangeByIndex(currentRow, 1).cellStyle = headerStyle;
-    currentRow += 2;
-
-    // Add headers
-    for (int i = 0; i < headers.length; i++) {
-      sheet.getRangeByIndex(currentRow, i + 1).setText(headers[i]);
-      sheet.getRangeByIndex(currentRow, i + 1).cellStyle = headerStyle;
-    }
-
-    // Add Overall Data
-    for (var row in overallRows) {
-      currentRow++;
-      final values = [
-        row.type,
-        row.regist,
-        row.pett,
-        row.nonPett,
-        row.advocate,
-        row.oic,
-        row.hearing,
-        row.decision,
-        row.contempt,
-        row.demandJustice,
-        row.notice80,
-        row.arbitration,
-        row.total,
-      ];
-      for (int c = 0; c < values.length; c++) {
-        final cell = sheet.getRangeByIndex(currentRow, c + 1);
-        if (values[c] is int) {
-          cell.setNumber((values[c] as int).toDouble());
-        } else {
-          cell.setText(values[c].toString());
-        }
-      }
-    }
-
-    // Add some spacing
-    currentRow += 3;
-
-    // 🟩 Section 2: Today's Status
-    sheet.getRangeByIndex(currentRow, 1).setText("Today's Entry Status");
-    sheet.getRangeByIndex(currentRow, 1, currentRow, headers.length).merge();
-    sheet.getRangeByIndex(currentRow, 1).cellStyle = headerStyle;
-    currentRow += 2;
-
-    // Add headers again
-    for (int i = 0; i < headers.length; i++) {
-      sheet.getRangeByIndex(currentRow, i + 1).setText(headers[i]);
-      sheet.getRangeByIndex(currentRow, i + 1).cellStyle = headerStyle;
-    }
-
-    // Add Today’s Data
-    for (var row in todayRows) {
-      currentRow++;
-      final values = [
-        row.type,
-        row.regist,
-        row.pett,
-        row.nonPett,
-        row.advocate,
-        row.oic,
-        row.hearing,
-        row.decision,
-        row.contempt,
-        row.demandJustice,
-        row.notice80,
-        row.arbitration,
-        row.total,
-      ];
-      for (int c = 0; c < values.length; c++) {
-        final cell = sheet.getRangeByIndex(currentRow, c + 1);
-        if (values[c] is int) {
-          cell.setNumber((values[c] as int).toDouble());
-        } else {
-          cell.setText(values[c].toString());
-        }
-      }
-    }
-
-    // Auto-fit columns for better layout
-    sheet.autoFitColumn(1);
-    for (int i = 2; i <= headers.length; i++) {
-      sheet.autoFitColumn(i);
-    }
-
-    // Save the workbook
-    final bytes = workbook.saveAsStream();
-    workbook.dispose();
-
-    final dir = await getApplicationDocumentsDirectory();
-    final file = File('${dir.path}/EntryStatusReport.xlsx');
-    await file.writeAsBytes(bytes, flush: true);
-
-    print('Excel saved at: ${file.path}');
-
-    final appDialog = EssentialDialogModel(
-      appTitle: String_App().appname,
-      appMessage: "Excel exported successfully!",
-      positiveText: "Open Excel",
-      negativeText: "Close",
-      onPositive: () async {
-        await OpenFilex.open(file.path);
-      },
-      onNegative: () {
-        Navigator.pop(context);
-      },
-    );
-
-    await EssentialDialogs().openOkDismissDialog(context, appDialog);
-  }
-
-
 
   @override
   Widget build(BuildContext context) {
@@ -404,29 +246,6 @@ class _EntryStatusReportState extends State<EntryStatusReport> {
                 ],
               ),
               const SizedBox(height: 12),
-
-              Row(
-                children: [
-                  ElevatedButton.icon(
-                    icon: const Icon(Icons.download),
-                    label: const Text("Export to Excel"),
-                    onPressed: () async {
-                      await exportEntryStatusToExcel(
-                        overallRows: _overallStatusDataSource.rows
-                            .map((r) => _toEntryRow(r))
-                            .toList(),
-                        todayRows: _todayStatusDataSource.rows
-                            .map((r) => _toEntryRow(r))
-                            .toList(),
-                        context: context
-                      );
-                    },
-                  ),
-                  const SizedBox(width: 12),
-                ],
-              ),
-
-              const SizedBox(height: 12),
             //  const _ReportHeaderSection(),
               buildGovernmentInfo(),
                 SfDataGrid(
@@ -462,27 +281,6 @@ class _EntryStatusReportState extends State<EntryStatusReport> {
           ),
         ),
       ),
-    );
-  }
-
-
-  EntryRowModel _toEntryRow(DataGridRow row) {
-    final cells = {for (var c in row.getCells()) c.columnName: c.value};
-
-    return EntryRowModel(
-      type: cells['type'] ?? '',
-      regist: cells['regist'] ?? 0,
-      pett: cells['pett'] ?? 0,
-      nonPett: cells['nonPett'] ?? 0,
-      advocate: cells['advocate'] ?? 0,
-      oic: cells['oic'] ?? 0,
-      hearing: cells['hearing'] ?? 0,
-      decision: cells['decision'] ?? 0,
-      contempt: cells['contempt'] ?? 0,
-      demandJustice: cells['demandJustice'] ?? 0,
-      notice80: cells['notice80'] ?? 0,
-      arbitration: cells['arbitration'] ?? 0,
-      total: cells['total'] ?? 0,
     );
   }
 
@@ -757,7 +555,6 @@ class _EntryStatusReportState extends State<EntryStatusReport> {
 }
 
 
-
 //----------------------------
 List<GridColumn> _buildGridColumns() {
   return [
@@ -911,22 +708,4 @@ class EntryStatusDataSource extends DataGridSource {
           }).toList(),
     );
   }
-}
-
-extension on EntryRowModel {
-  Map<String, dynamic> toMap() => {
-    "type": type,
-    "regist": regist,
-    "pett": pett,
-    "nonPett": nonPett,
-    "advocate": advocate,
-    "oic": oic,
-    "hearing": hearing,
-    "decision": decision,
-    "contempt": contempt,
-    "demandJustice": demandJustice,
-    "notice80": notice80,
-    "arbitration": arbitration,
-    "total": total,
-  };
 }
