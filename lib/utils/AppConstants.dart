@@ -50,13 +50,9 @@ return headers;
   static const reportUrl = "https://testlites.rajasthan.gov.in/reportservice/api/";
   static const caseUrl = "https://testlites.rajasthan.gov.in/caseservices/api/";
   static const authUrl = "https://testlites.rajasthan.gov.in/AuthService/api/";
+  static const HcUrl = "https://testlites.rajasthan.gov.in/HCService/api/";
+  static const EcUrl = "https://testlites.rajasthan.gov.in/ECService/api/";
   static const masterUrl = "https://testlites.rajasthan.gov.in/LitesGateway/Master/";
-
-  // SIT PUBLIC Development Url
-  /*static const baseUrl = "http://103.203.138.228/masterservices/api/";
-  static const reportUrl = "http://103.203.138.228/reportservice/api/";
-  static const caseUrl = "http://103.203.138.228/caseservices/api/";
-  static const authUrl = "http://103.203.138.228/AuthService/api/";*/
 
   // static const baseUrl = "http://10.70.236.252/masterservices/api/";
   // static const reportUrl = "http://10.70.236.252/reportservice/api/";
